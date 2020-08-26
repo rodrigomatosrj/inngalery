@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\ModelsColour2;
 use Illuminate\Http\Request;
 
-class ModelsColour2Controller extends Controller
+class ArtistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +40,10 @@ class ModelsColour2Controller extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\ModelsColour2  $modelsColour2
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(ModelsColour2 $modelsColour2)
+    public function show($id)
     {
         //
     }
@@ -52,10 +51,10 @@ class ModelsColour2Controller extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ModelsColour2  $modelsColour2
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ModelsColour2 $modelsColour2)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +63,10 @@ class ModelsColour2Controller extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ModelsColour2  $modelsColour2
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ModelsColour2 $modelsColour2)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +74,10 @@ class ModelsColour2Controller extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ModelsColour2  $modelsColour2
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ModelsColour2 $modelsColour2)
+    public function destroy($id)
     {
         //
     }
