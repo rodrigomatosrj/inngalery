@@ -16,3 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('/adm/products', 'ProductController');
+Route::resource('/adm/artists', 'ArtistController');
+Route::resource('/adm/categories', 'CategoryController');
+Route::resource('/adm/colours', 'ColourController');
+Route::resource('/adm/themes', 'ThemeController');
+Route::resource('/adm/types', 'TypeController');
+
+
+Auth::routes(['register' => false]);
+
+Route::get('/home', 'HomeController@index')->name('home');

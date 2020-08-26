@@ -3,46 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Type;
+
 
 class TypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $types = Type::where('active','=',true)->paginate();
+        return view('adm.types.index', ['types' => $types]);    
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('adm.types.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->only('name');
+        $data["active"] = true;
+        Type::create($data);
+        return redirect()->route('types.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
@@ -56,7 +40,11 @@ class TypeController extends Controller
      */
     public function edit($id)
     {
-        //
+       if(!$type = Type::find($id)){
+            return redirect()->back();
+        }else{
+            return view('adm.types.edit', ['type' => $type]);
+        }    
     }
 
     /**
@@ -68,17 +56,26 @@ class TypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(!$type = Type::find($id)){
+            return redirect()->back();
+        }else{
+            $data = $request->only('name');
+            $type->update($data);
+            return redirect()->route('types.index');
+        }        
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        if(!$type = Type::find($id)){
+            return redirect()->back();
+        }else{
+            $type = Type::find($id);
+            $data = ["active" => false];
+            $type->update($data);
+            return redirect()->route('types.index');
+        }        
+
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -13,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::where('active','=',true)->paginate();
+        return view('adm.categories.index', ['categories' => $categories]);        
     }
 
     /**
@@ -23,7 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('adm.categories.create');
     }
 
     /**
@@ -34,7 +36,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->only('name');
+        $data["active"] = true;
+        Category::create($data);
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -56,7 +61,11 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(! $category = Category::find($id)){
+            return redirect()->back();
+        }else{
+            return view('adm.categories.edit',['category' => $category]);
+        }
     }
 
     /**
@@ -68,7 +77,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(! $category = Category::find($id)){
+            return redirect()->back();
+        }else{
+            $data = $request->only('name');
+            $category->update($data);
+            return redirect()->route('categories.index');
+        }  
     }
 
     /**
@@ -79,6 +94,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(! $category = Category::find($id)){
+            return redirect()->back();
+        }else{
+            $data['active'] = false;
+            $category->update($data);
+            return redirect()->route('categories.index');
+        } 
     }
 }
