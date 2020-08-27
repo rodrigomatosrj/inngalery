@@ -22,6 +22,6 @@
   
 </table>    
 
-<a href="{{ route('products.index')}}" class="btn btn-info">Voltar</a>
+<a href="{{ route('adm.index')}}" class="btn btn-info">Voltar</a>
 
 @endsection    

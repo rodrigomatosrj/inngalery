@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Artist;
+
 
 class ArtistController extends Controller
 {
@@ -13,7 +16,14 @@ class ArtistController extends Controller
      */
     public function index()
     {
-        //
+        //$artists = Artist::paginate();            
+        $artists = DB::table('artists')
+                    ->leftjoin('products','artists.id','=','products.artist_id')
+                    ->select('artists.*', DB::raw('COUNT(products.id) as total'))
+                    ->groupBy('artists.id')
+                    ->paginate();
+
+        return view('adm.artists.index', ['artists' => $artists]);
     }
 
     /**
@@ -23,7 +33,7 @@ class ArtistController extends Controller
      */
     public function create()
     {
-        //
+        return view('adm.artists.create');
     }
 
     /**
@@ -34,7 +44,15 @@ class ArtistController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->except("_token");
+        if ($request->hasFile('image') && $request->image->isValid()) {
+            $imagePath = $request->image->store('artists');
+            $data['image'] = $imagePath;
+        }
+        $data['active'] = true;
+
+        Artist::create($data);
+        return redirect()->route('artists.index');
     }
 
     /**
@@ -45,7 +63,13 @@ class ArtistController extends Controller
      */
     public function show($id)
     {
-        //
+       if(!$artist = Artist::find($id)){
+            return redirect()->back();
+       }else{
+            return view('adm.artists.show',['artist' => $artist]);
+       }
+       
+       
     }
 
     /**

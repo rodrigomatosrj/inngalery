@@ -16,6 +16,7 @@ class CreateArtistsTable extends Migration
         Schema::create('artists', function (Blueprint $table) {
             $table->id();
             $table->string('name')->required();
+            $table->string('image');
             $table->text('biography');
             $table->boolean('active')->required();
             $table->timestamps();

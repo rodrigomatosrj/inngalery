@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('adm', function(){
+    return view('adm.index');
+})->name('adm.index');
+
 Route::resource('/adm/products', 'ProductController');
 Route::resource('/adm/artists', 'ArtistController');
 Route::resource('/adm/categories', 'CategoryController');
